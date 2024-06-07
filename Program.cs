@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IQueryRepository, QueryRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddDbContext<MemoryBookContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default"));

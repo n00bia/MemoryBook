@@ -25,12 +25,21 @@ namespace MemoryBook.Data
         {
             base.OnModelCreating(modelBuilder);
             
-            var query = modelBuilder.Entity<QueryModel>();
+            var query = modelBuilder.Entity<QueryModel>();            
 
             query.ToTable("query");
             query.HasKey(x => x.Id);
             query.Property(x => x.Id).HasColumnName("id").ValueGeneratedOnAdd();
             query.Property(x => x.Body).HasColumnName("body").HasColumnType("text");
+
+            var tag = modelBuilder.Entity<TagModel>();
+
+            tag.ToTable("tag");
+            tag.HasKey(x => x.Id);
+            tag.Property(x => x.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            tag.Property(x => x.Name).HasColumnName("name").HasColumnType("char").HasMaxLength(250);
+
+
 
         }
     }

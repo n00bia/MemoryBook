@@ -38,14 +38,28 @@ namespace MemoryBook.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<TagModel>> Update([FromBody] TagModel tagModel, int id)
         {
+            TagModel wantedTag = await _tagRepository.GetById(id);
+
+            if (wantedTag == null) 
+            {
+                return BadRequest("Tag não encontrada");
+            }
+
             tagModel.Id = id;
-            TagModel tag = await _tagRepository.Update(tagModel);
-            return Ok(tag);
+            wantedTag = await _tagRepository.Update(tagModel);
+            return Ok(wantedTag);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<TagModel>> DeleteById(int id)
         {
+            TagModel wantedTag = await _tagRepository.GetById(id);
+
+            if (wantedTag == null)
+            {
+                return BadRequest("Tag não encontrada.");
+            }
+
             bool deleted = await _tagRepository.DeleteById(id);
             return Ok(deleted);
         }

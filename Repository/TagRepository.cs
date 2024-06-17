@@ -16,18 +16,12 @@ namespace MemoryBook.Repository
         {
             await _dbContext.Tags.AddAsync(tag);
             _dbContext.SaveChanges();
-
             return tag;
         }
 
         public async Task<bool> DeleteById(int id)
         {
-            TagModel tagById = await GetById(id);
-
-            if (tagById == null)
-            {
-                throw new Exception("Tag not found");
-            }
+            TagModel tagById = await GetById(id);         
 
             _dbContext.Tags.Remove(tagById);
             _dbContext.SaveChanges();
@@ -44,20 +38,13 @@ namespace MemoryBook.Repository
             return await _dbContext.Tags.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<TagModel> Update(TagModel tag)
+        public async Task<TagModel> Update(TagModel tag)
         {
-            TagModel wantedTag = _dbContext.Tags.FirstOrDefault(q => q.Id == tag.Id);
-
-            if (wantedTag == null)
-            {
-                throw new Exception("Tag not found");
-            }
+            TagModel wantedTag = await GetById(tag.Id);
 
             wantedTag.Name = tag.Name;
-
-            _dbContext.Tags.Update(wantedTag);
-            _dbContext.SaveChanges();
-            return Task.FromResult(wantedTag);
+            await _dbContext.SaveChangesAsync();          
+            return wantedTag;
         }
     }
 }

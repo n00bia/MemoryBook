@@ -39,12 +39,9 @@ namespace MemoryBook.Repository
         }
 
         public async Task<TagModel> Update(TagModel tag)
-        {
-            TagModel wantedTag = await GetById(tag.Id);
-
-            wantedTag.Name = tag.Name;
+        {          
             await _dbContext.SaveChangesAsync();          
-            return wantedTag;
+            return tag;
         }
     }
 }

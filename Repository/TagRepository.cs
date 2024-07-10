@@ -39,7 +39,8 @@ namespace MemoryBook.Repository
         }
 
         public async Task<TagModel> Update(TagModel tag)
-        {          
+        {      
+            _dbContext.Tags.Update(tag);
             await _dbContext.SaveChangesAsync();          
             return tag;
         }

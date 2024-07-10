@@ -45,7 +45,7 @@ namespace MemoryBook.Controllers
                 return BadRequest("Tag não encontrada");
             }
 
-            tagModel.Id = id;
+            wantedTag.Name = tagModel.Name;            
             wantedTag = await _tagRepository.Update(tagModel);
             return Ok(wantedTag);
         }
